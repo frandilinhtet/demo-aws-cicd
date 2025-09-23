@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const priorityInput = document.getElementById('priority-input');
     const categoryInput = document.getElementById('category-input');
     const addTodoBtn = document.getElementById('add-todo-btn');
-    const API_URL = 'https://todo.frandisharing.com';
+    const API_URL = 'https://todo.frandisharing.com/api/todos';
 
     // Helper function to convert priority number to stars
     const getPriorityStars = (priority) => {
@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
             case 2:
                 return '⭐⭐'; // or '**'
             case 3:
-                return '⭐⭐⭐'; // or '***'
+                return '⭐⭐⭐'; // or '***' 
             default:
                 return '';
         }

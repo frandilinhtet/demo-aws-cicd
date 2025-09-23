@@ -1,0 +1,28 @@
+version: 0.2
+
+env:
+  variables:
+    IMAGE_REPO_NAME: "demo-todo"
+    IMAGE_TAG: "latest"
+    AWS_ACCOUNT_ID: "731688648686"
+    AWS_REGION: "ap-southeast-1"
+
+phases:
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - aws ecr-public get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin public.ecr.aws
+  build:
+    commands:
+      - echo Build started on `date`
+      - echo Building the Docker image...
+      - docker build -t $IMAGE_REPO_NAME:$IMAGE_TAG .
+      - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG public.ecr.aws/<your-alias>/$IMAGE_REPO_NAME:$IMAGE_TAG
+  post_build:
+    commands:
+      - echo Pushing the Docker image...
+      - docker push public.ecr.aws/y2s5x2t7/$IMAGE_REPO_NAME:$IMAGE_TAG
+      - printf '[{"name":"demo-todo","imageUri":"public.ecr.aws/y2s5x2t7/$IMAGE_REPO_NAME:$IMAGE_TAG"}]' $IMAGE_REPO_NAME $IMAGE_TAG > imagedefinitions.json
+artifacts:
+  files:
+    - imagedefinitions.json

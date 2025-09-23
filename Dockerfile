@@ -17,7 +17,7 @@ FROM node:20-alpine
 WORKDIR /app
 
 # Copy only the essential files from the build stage
-COPY --from=build-stage /app/node_modules ./node_modules
+# COPY --from=build-stage /app/node_modules ./node_modules
 COPY --from=build-stage /app/app.js .
 COPY --from=build-stage /app/public ./public
 COPY --from=build-stage /app/models ./models

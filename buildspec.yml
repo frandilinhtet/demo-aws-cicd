@@ -11,7 +11,7 @@ phases:
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
-      - aws ecr-public get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin public.ecr.aws/y2s5x2t7
+      - aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws
   build:
     commands:
       - echo Build started on `date`
@@ -22,7 +22,7 @@ phases:
     commands:
       - echo Pushing the Docker image...
       - docker push public.ecr.aws/y2s5x2t7/$IMAGE_REPO_NAME:$IMAGE_TAG
-      - printf '[{"name":"demo-todo","imageUri":"public.ecr.aws/y2s5x2t7/$IMAGE_REPO_NAME:$IMAGE_TAG"}]' $IMAGE_REPO_NAME $IMAGE_TAG > imagedefinitions.json
+      - printf '[{"name":"demo-todo","imageUri":"public.ecr.aws/y2s5x2t7/%s:%s"}]' $IMAGE_REPO_NAME $IMAGE_TAG > imagedefinitions.json
 artifacts:
   files:
     - imagedefinitions.json
